@@ -1,0 +1,50 @@
+def decrypt_vignere(ciphertext, key):
+    ciphertext = ciphertext.replace(" ", "").upper()
+    key = key.replace(" ", "").upper()
+    plaintext = ""
+    keyn = 0
+    for letter in ciphertext:
+        #plaintext += (letter - key[keyn]) % 26
+        plaintext += chr(65+(ord(letter)-64 + (ord(key[keyn])-64)) % 26)
+        keyn += 1
+        if keyn >= len(key):
+            keyn = 0
+    return plaintext
+
+
+ciphertext="MDEYA RSRAA HYOAS UKEDE AMBOU VATRD AISKB UTEIN THEIN RORAY ONNEI AVHEA SEDKC ANELT LYOAN UYTHN GIINT REEST IGANB OUHIT MIHVE ACERA ITNLY EVNER ETENR TANEI DAGEE RKMEC HRANT FTOHA TAMNE INYSM TUDWH YETHR WEITH WOTFR INDES ORWET NTYFC IASSL IESPE SURAD ETHDA THHAE SSENA EPHOO GTRAP OFHTH AGETN TLMAE NANHI DSFRE NIDST KEANH EETRH ENITE HEREI HSMIT ASKEN RIOSF ALILN GVCTI IMTAR OEMAK ARBLY MPIUD ETTNR ICIDK ONOLI TKEIT HTERE REAQU IEETN OUHPG EOPER LEADT OYIMP TEUAP OITLI CAINL TENIO TNTOV EERYT INHGI SYAAN DDWIO THOTA UNUNN OKWNG NTELE MNWAI THUBD IOUIN STENC LTAIM NGIAN AQUCA INANT CEWTH IMESN CIEEG PTYTH EEWNS PAERP SHAEB VEENN AIFEV RAEND MMOYT HEHAR SNOBE TENSO WLTOR MIEND MTHEA TEENV ANINO NCENI NTDIS RECTI OMING HTEMB ADEOL TOOKI KLEAP LIOCY IAGMI NEERH DISLE PASUE IRFSH WEERE TLDOT HAIHT ADBEN ECONU CDTIN GRGEE KONME TAYNR EGOIA TTIOS FNROM YWMRI TNGID ESTHK EPHTO OGRAH TPROU LEBSM EORME THNIA CANUI QTEEP LXAIN OUYRI NWEKL LIHES REBSI EDEMW HEILE WRIIT EHESI SNMOO REACO CMMOA TDING OATPE NHATN SHWAE SWHNY EOUFR SITPR SEENT EHEDR BUIWT OULNO DTEXH ACNGE ERHFO RSEAN SILEB PIEEO CFFUN IRTUR IHEAV EOONB JETIC ONTCA OSSEA DLMIR NGIHE RUTBI OBECJ TVEYM RUCHO HTERB INEGU SDAES ALTTE EROIN FTROU CDTIO BYNAS TANRG ERHAI VEWIT RTENO CTASS LAESY OASUK EDNDA TOLHI DMTHT IAKNO NOWTH IGONF THMAE NCASE SLCAA TNTEN TODHI SWNOA FFIRA SALHO TUGHT MIAYS RVEEH IWEML LTREO MEMER BTHAA FTINE HOPTO GAPRH ANAND AGREA EBLEA NMNER REANO TANBK INGUG ARATE NESAD NNOWI USMTA SAFKA VORWU HICYO HUWIL DLISL KEIPL ESEAL EAETV HISOH TIMIN OKWHO CUWRI OSYUO UAEAR NDHWL OITTE YLOUE JONYB ENGIF ORIDB DENNY ATHIG BNUTT ERHEI SLLAT HEIFD FERNC EEINH ETWOR DBLET WENEA MYTES RYUON PTHET ASGEA DONNE WICHH MALEY ADTAQ OUESI OTNIN ARPLI AENMT ISOUH LDBMI ESERB LAEIF PIAEC EFNOO NSNSE EABUT OMYSU DTYIN URJED YUAON DIHAS LLBFU ERIOS IUFIT MBEAR RSSAE SORFU RIEDA NSWEL YLOUH VEANO TNSAW ERDME YQUST EIONB OAUTT EHHAT IITSQ UIEAT SEXRA TORDN AIRYA YOSUP RMIOS EPRHE APSSH IALLI NFDOU FOTRM YELSF WHNIE AMNXT EINPR IASYO RSUAF FCTEI ONTEA LYABE LRT"
+guess="relativesinbrooklyn"
+for i in range(len(guess)):
+    #print(decrypt_vignere(ciphertext, guess))
+    guess = guess[1:]+guess[0]
+    print("")
+
+
+def decrypt_scytale(ciphertext, cylinder_size):
+    ciphertext = ciphertext.replace(" ", "").upper()
+    plaintext = ""
+    ciphernum = 0
+    wraps = 1
+    for i in ciphertext:
+        plaintext += ciphertext[ciphernum]
+        ciphernum += cylinder_size
+        if ciphernum >= len(ciphertext):
+            ciphernum = wraps
+            wraps += 1
+    return plaintext
+
+#print(decrypt_scytale(ciphertext, 10))
+
+def decrypt_shuffle(ciphertext, key):
+    group = 0
+    ciphertext = ciphertext.replace(" ", "").upper()
+    plaintext = ""
+    key_length = len(key)
+    for i in range(len(ciphertext)):
+        j = (key[i%key_length]-1)+((i//key_length)*key_length)
+        if j < len(ciphertext):
+            plaintext += ciphertext[j]
+
+    return plaintext
+
+print(decrypt_shuffle(ciphertext, [1,4,2,3,5,6]))
